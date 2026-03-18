@@ -7,8 +7,11 @@
   <link rel="icon" type="image/png" href="assets/ELVA_LOGO.png">
   <script>
     const user = localStorage.getItem('elva_user');
-    // TEMP TEST
-document.body.innerHTML = "<h1>ELVA WORKSPACE LIVE 🚀</h1>";
+    if (user) {
+      window.location.href = './dashboard.html';
+    } else {
+      window.location.href = './login.html';
+    }
   </script>
 </head>
 <body>
