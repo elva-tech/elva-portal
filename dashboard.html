@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ELVA Workspace - Dashboard</title>
+    <link rel="icon" type="image/png" href="assets/ELVA_LOGO.png">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gabriela&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <link
+      href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script> -->
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div id="globalLoader"></div>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <img src="assets/ELVA_LOGO.png" alt="ELVA" style="width: 100px" />
+        </div>
+        <nav>
+          <a href="#" data-section="dashboard" class="active">Dashboard</a>
+          <a href="#" data-section="employees">Employees</a>
+          <a href="#" data-section="interns">Interns</a>
+          <a href="#" data-section="projects">Projects</a>
+          <a href="#" data-section="leaves">Leaves</a>
+          <a href="#" data-section="my-approvals">My Approvals</a>
+          <a href="#" data-section="assets">Assets</a>
+          <a href="#" data-section="profile">Profile</a>
+        </nav>
+      </aside>
+      <main class="main-content">
+        <header class="topbar">
+          <div class="topbar-left">
+            <span class="app-logo mobile-brand"
+              ><img src="assets/ELVA_LOGO.png" style="height: 50px"
+            /></span>
+          </div>
+
+          <div class="user-info">
+            <span id="userName">User</span>
+            <button id="logoutButton">Logout</button>
+          </div>
+        </header>
+        <section id="dashboard" class="section active">
+          <div class="quick-actions" id="quickActions"></div>
+          <div class="cards" id="statsCards"></div>
+          <div class="chart-row">
+            <div class="panel chart-panel">
+              <h2>Employees vs Interns</h2>
+              <canvas id="chartEmployeesInterns"></canvas>
+            </div>
+            <div class="panel chart-panel">
+              <h2>Project Distribution</h2>
+              <canvas id="chartProjectStatus"></canvas>
+            </div>
+          </div>
+          <div class="panel recent-activity-panel">
+            <h2>Recent Activity</h2>
+            <ul id="recentActivities"></ul>
+          </div>
+        </section>
+        <section id="employees" class="section" hidden>
+          <h2>Employees Management</h2>
+          <form id="employeeForm" class="module-form">
+            <input type="hidden" id="employeeId" />
+            <div class="form-group">
+              <label for="employeeName">Name</label
+              ><input type="text" id="employeeName" required />
+            </div>
+            <div class="form-group">
+              <label for="employeeEmail">Email</label
+              ><input type="email" id="employeeEmail" required />
+            </div>
+            <div class="form-group">
+              <label for="employeeDesignation">Designation</label
+              ><select id="employeeDesignation" required></select>
+            </div>
+            <div class="form-group">
+              <label for="employeeDepartment">Department</label
+              ><select id="employeeDepartment" required></select>
+            </div>
+            <div class="form-group">
+              <label for="employeeJoiningDate">Joining Date</label
+              ><input type="date" id="employeeJoiningDate" required />
+            </div>
+            <div class="form-group">
+              <label for="employeeStatus">Status</label
+              ><select id="employeeStatus" required>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+            <button type="submit">Save Employee</button>
+          </form>
+          <div class="table-wrapper"><table id="employeesTable"></table></div>
+        </section>
+        <section id="interns" class="section" hidden>
+          <h2>Interns Management</h2>
+          <form id="internForm" class="module-form">
+            <input type="hidden" id="internId" />
+            <div class="form-group">
+              <label for="internName">Name</label
+              ><input type="text" id="internName" required />
+            </div>
+            <div class="form-group">
+              <label for="internCollege">College</label
+              ><input type="text" id="internCollege" required />
+            </div>
+            <div class="form-group">
+              <label for="internemail">Email</label
+              ><input type="email" id="internEmail" required />
+            </div>
+            <div class="form-group">
+              <label for="internMentor">Mentor</label
+              ><select id="internMentor" required>
+                <option value="">Select Mentor</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="internStartDate">Start Date</label
+              ><input type="date" id="internStartDate" required />
+            </div>
+            <div class="form-group">
+              <label for="internProject">Project</label
+              ><select id="internProject" required>
+                <option value="">Select Project</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="internStatus">Status</label
+              ><select id="internStatus" required>
+                <option value="Active">Active</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+            <button type="submit">Save Intern</button>
+          </form>
+          <div class="table-wrapper"><table id="internsTable"></table></div>
+        </section>
+        <section id="projects" class="section" hidden>
+          <h2>Projects Management</h2>
+          <form id="projectForm" class="module-form">
+            <input type="hidden" id="projectId" />
+            <div class="form-group">
+              <label for="projectName">Project Name</label
+              ><input type="text" id="projectName" required />
+            </div>
+            <div class="form-group">
+              <label for="projectDescription">Description</label
+              ><input type="text" id="projectDescription" required />
+            </div>
+            <div class="form-group">
+              <label for="projectOwner">Owner</label
+              ><select id="projectOwner" required></select>
+            </div>
+            <div class="form-group">
+              <label for="projectTeamMembers">Team Members</label
+              ><select id="projectTeamMembers" multiple required></select>
+              <small>Hold Ctrl (Windows) or Cmd (Mac) to select multiple</small>
+            </div>
+            <div class="form-group">
+              <label for="projectStartDate">Start Date</label
+              ><input type="date" id="projectStartDate" required />
+            </div>
+            <div class="form-group">
+              <label for="projectDeadline">Deadline</label
+              ><input type="date" id="projectDeadline" required />
+            </div>
+            <div class="form-group">
+              <label for="projectStatus">Status</label
+              ><select id="projectStatus" required>
+                <option value="Active">Active</option>
+                <option value="Completed">Completed</option>
+                <option value="On Hold">On Hold</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="projectTechStack">Tech Stack (optional)</label
+              ><input
+                type="text"
+                id="projectTechStack"
+                placeholder="Angular, Spring Boot, AWS"
+              />
+            </div>
+            <div class="form-group">
+              <label for="projectRepositoryUrl">Repository URL (optional)</label
+              ><input
+                type="url"
+                id="projectRepositoryUrl"
+                placeholder="https://github.com/..."
+              />
+            </div>
+            <button type="submit">Save Project</button>
+          </form>
+          <div class="table-wrapper" id="projectsCardContainer"></div>
+          <div id="projectDetailContainer"></div>
+        </section>
+        <section id="leaves" class="section" hidden>
+          <h2>Leave Management</h2>
+          <form id="leaveForm" class="module-form">
+            <input type="hidden" id="leaveId" />
+            <div class="form-group" id="leaveUserGroup">
+              <label for="leaveUserId">User</label
+              ><select id="leaveUserId" required></select>
+            </div>
+            <div class="form-group" id="leaveProjectGroup">
+              <label for="leaveProjectId">Project</label
+              ><select id="leaveProjectId" required></select>
+            </div>
+            <div class="form-group">
+              <label for="leaveType">Leave Type</label
+              ><select id="leaveType" required>
+                <option value="Sick">Sick</option>
+                <option value="Casual">Casual</option>
+                <option value="Emergency">Emergency</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="leaveStartDate">Start Date</label
+              ><input type="date" id="leaveStartDate" required />
+            </div>
+            <div class="form-group">
+              <label for="leaveEndDate">End Date</label
+              ><input type="date" id="leaveEndDate" required />
+            </div>
+            <div class="form-group">
+              <label for="leaveReason">Reason</label
+              ><input type="text" id="leaveReason" required />
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="primary-btn">Apply Leave</button>
+              <button type="button" id="clearLeaveForm" class="clear-btn">
+                Clear
+              </button>
+            </div>
+          </form>
+          <div class="table-wrapper"><table id="leavesTable"></table></div>
+        </section>
+        <section id="my-approvals" class="section" hidden>
+          <h2>My Approvals</h2>
+          <div class="table-wrapper"><table id="approvalsTable"></table></div>
+        </section>
+        <section id="assets" class="section" hidden>
+          <h2>Asset Management</h2>
+          <p>Assets module coming soon. Currently no assets assigned.</p>
+        </section>
+        <section id="profile" class="section" hidden>
+          <h2>Profile</h2>
+          <div id="profileInfo"></div>
+          <form id="profileUpdateForm" class="module-form">
+            <input
+              type="text"
+              id="profilePhone"
+              placeholder="Phone Number"
+              required
+            />
+            <input
+              type="password"
+              id="profilePassword"
+              placeholder="New Password"
+            />
+            <button type="submit">Update Profile</button>
+          </form>
+        </section>
+        <p id="notifications" class="notifications"></p>
+      </main>
+      <div id="projectModal" class="modal">
+        <div class="modal-content">
+          <span id="closeProjectModal" class="close">&times;</span>
+
+          <div id="projectModalBody"></div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      © 2026 ELVA Tech | ELVA Workspace v1.0 | Support:
+      <a href="mailto:hr@elvatech.in">hr@elvatech.in</a>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/employees.js"></script>
+    <script src="js/interns.js"></script>
+    <script src="js/projects.js"></script>
+    <script src="js/leaves.js"></script>
+    <script src="js/assets.js"></script>
+    <div id="bottomNav" class="bottom-nav"></div>
+  </body>
+</html>
